@@ -1,0 +1,1 @@
+dotnet publish ../libomt.sln -r osx-arm64 -c Release

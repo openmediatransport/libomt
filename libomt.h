@@ -1,0 +1,144 @@
+#pragma once
+#pragma comment(lib, "libomt.lib")
+
+const int OMT_MAX_STRING_LENGTH = 1024;
+
+enum OMTFrameType : int
+{
+    OMTFrameType_None = 0,
+    OMTFrameType_Metadata = 1,
+    OMTFrameType_Video = 2,
+    OMTFrameType_Audio = 4
+};
+enum OMTCodec : int
+{
+    OMTCodec_VMX1 = 0x31584D56,
+    OMTCodec_FPA1 = 0x31415046,
+    OMTCodec_UYVY = 0x59565955,
+    OMTCodec_BGRA = 0x41524742
+};
+enum OMTQuality : int
+{
+    OMTQuality_Default = 0,
+    OMTQuality_Low = 1,
+    OMTQuality_Medium = 50,
+    OMTQuality_High = 100
+};
+enum OMTColorSpace : int
+{
+    OMTColorSpace_Undefined = 0,
+    OMTColorSpace_BT601 = 601,
+    OMTColorSpace_BT709 = 709
+};
+enum OMTVideoFlags : int
+{
+    OMTVideoFlags_None = 0,
+    OMTVideoFlags_Interlaced = 1,
+    OMTVideoFlags_Alpha = 2,
+    OMTVideoFlags_Preview = 4
+};
+
+enum OMTPreferredVideoFormat : int
+{
+    OMTPreferredVideoFormat_UYVY = 0,
+    OMTPreferredVideoFormat_UYVYorBGRA = 1,
+    OMTPreferredVideoFormat_BGRA = 2
+};
+enum OMTReceiveFlags : int
+{
+    OMTReceiveFlags_None = 0,
+    OMTReceiveFlags_Preview = 1,
+    OMTReceiveFlags_IncludeCompressed = 2
+};
+
+struct OMTTally
+{
+    int preview;
+    int program;
+};
+
+struct OMTSenderInfo
+{
+    char ProductName[OMT_MAX_STRING_LENGTH];
+    char Manufacturer[OMT_MAX_STRING_LENGTH];
+    char Version[OMT_MAX_STRING_LENGTH];
+    char Reserved1[OMT_MAX_STRING_LENGTH];
+    char Reserved2[OMT_MAX_STRING_LENGTH];
+    char Reserved3[OMT_MAX_STRING_LENGTH];
+};
+
+struct OMTStatistics
+{
+    int64_t BytesSent;
+    int64_t BytesReceived;
+    int64_t BytesSentSinceLast;
+    int64_t BytesReceivedSinceLast;
+
+    int64_t Frames;
+    int64_t FramesSinceLast;
+    int64_t FramesDropped;
+
+    int64_t CodecTime;
+    int64_t CodecTimeSinceLast;
+
+    int64_t Reserved1;
+    int64_t Reserved2;
+    int64_t Reserved3;
+    int64_t Reserved4;
+    int64_t Reserved5;
+    int64_t Reserved6;
+    int64_t Reserved7;
+};
+
+struct OMTMediaFrame
+{
+    OMTFrameType Type;
+    int64_t Timestamp;
+    int Codec;
+
+    //Video Properties
+    int Width;
+    int Height;
+    int Stride;
+    OMTVideoFlags Flags;
+    int FrameRateN;
+    int FrameRateD;
+    float AspectRatio;
+    OMTColorSpace ColorSpace;
+
+    //Audio Properties
+    int SampleRate;
+    int Channels;
+    int SamplesPerChannel;
+
+    //Data Properties
+    void* Data;
+    int DataLength;
+    void* CompressedData;
+    int CompressedLength;
+};
+
+typedef long long omt_receive_t;
+typedef long long omt_send_t;
+
+extern "C" omt_receive_t* omt_receive_create(const char* name, OMTFrameType frameTypes, OMTPreferredVideoFormat format, OMTReceiveFlags flags);
+extern "C" void omt_receive_destroy(omt_receive_t* instance);
+extern "C" OMTMediaFrame* omt_receive(omt_receive_t* instance, OMTFrameType frameTypes, int timeoutMilliseconds);
+extern "C" int omt_receive_send(omt_receive_t* instance, OMTMediaFrame* frame);
+extern "C" void omt_receive_settally(omt_receive_t* instance, OMTTally* tally);
+extern "C" void omt_receive_getsenderinformation(omt_receive_t* instance, OMTSenderInfo* info);
+extern "C" void omt_receive_getvideostatistics(omt_receive_t* instance, OMTStatistics* stats);
+extern "C" void omt_receive_getaudiostatistics(omt_receive_t* instance, OMTStatistics* stats);
+
+extern "C" omt_send_t* omt_send_create(const char* name, OMTQuality quality);
+extern "C" void omt_send_setsenderinformation(omt_send_t* instance, OMTSenderInfo* info);
+extern "C" void omt_send_destroy(omt_send_t* instance);
+extern "C" int omt_send(omt_send_t* instance, OMTMediaFrame* frame);
+extern "C" int omt_send_connections(omt_send_t* instance);
+extern "C" OMTMediaFrame* omt_send_receive(omt_send_t* instance, int timeoutMilliseconds);
+extern "C" bool omt_send_gettally(omt_send_t* instance, int timeoutMilliseconds, OMTTally* tally);
+extern "C" void omt_send_getvideostatistics(omt_send_t* instance, OMTStatistics* stats);
+extern "C" void omt_send_getaudiostatistics(omt_send_t* instance, OMTStatistics* stats);
+
+extern "C" void omt_setloggingfilename(const char* filename);
+

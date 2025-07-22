@@ -1,0 +1,1 @@
+dotnet publish ../libomt.sln -r linux-x64 -c Release
