@@ -13,4 +13,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="libomt.h">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
