@@ -146,6 +146,25 @@ struct OMTMediaFrame
 typedef long long omt_receive_t;
 typedef long long omt_send_t;
 
+
+/**
+* Retrieve the current value of a string setting.
+* Returns the length in bytes of the UTF-8 encoded value including null terminator.
+* maxLength specifies the maximum amount of bytes allocated to value by the caller.
+*/
+extern "C" int omt_settings_get_string(const char* name, char* value, int maxLength);
+
+/**
+* Set a string setting that will be used for the duration of this process.
+* Value should be a null terminated UTF-8 encoded string.
+*/
+extern "C" void omt_settings_set_string(const char* name, const char* value);
+
+
+extern "C" int omt_settings_get_integer(const char* name);
+extern "C" void omt_settings_set_integer(const char* name, int value);
+
+
 extern "C" omt_receive_t* omt_receive_create(const char* name, OMTFrameType frameTypes, OMTPreferredVideoFormat format, OMTReceiveFlags flags);
 extern "C" void omt_receive_destroy(omt_receive_t* instance);
 extern "C" OMTMediaFrame* omt_receive(omt_receive_t* instance, OMTFrameType frameTypes, int timeoutMilliseconds);

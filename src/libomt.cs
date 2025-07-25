@@ -24,6 +24,7 @@
 */
 
 using System.Runtime.InteropServices;
+using System.Text;
 using libomtnet;
 
 namespace libomt
@@ -42,6 +43,104 @@ namespace libomt
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             OMTLogging.Write(e.ExceptionObject.ToString(), "UnhandledException");
+        }
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_settings_set_string")]
+        public static void OMTSettingsSetString(IntPtr name, IntPtr value)
+        {
+            try
+            {
+                if (name != IntPtr.Zero && value != IntPtr.Zero)
+                {
+                    string? szName = Marshal.PtrToStringUTF8(name);
+                    string? szValue = Marshal.PtrToStringUTF8(value);
+                    if (szName != null && szValue != null)
+                    {
+                        OMTSettings.GetInstance().SetString(szName, szValue);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_settings_set_string");
+            }
+        }
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_settings_get_string")]
+        public static int OMTSettingsGetString(IntPtr name, IntPtr value, int maxLength)
+        {
+            try
+            {
+                if (name != IntPtr.Zero)
+                {
+                    string? szName = Marshal.PtrToStringUTF8(name);
+                    if (szName != null)
+                    {
+                        string szValue = OMTSettings.GetInstance().GetString(szName, null);
+                        if (szValue != null)
+                        {
+                            byte[] b = UTF8Encoding.UTF8.GetBytes(szValue);
+                            if (b != null)
+                            {
+                                int len = b.Length + 1;
+                                if (value == IntPtr.Zero) return len;
+                                if (maxLength > len)
+                                {
+                                    Marshal.Copy(b, 0, value, b.Length);
+                                    Marshal.WriteByte(value, b.Length, 0);
+                                    return len;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_settings_get_string");
+            }
+            return 0;
+        }
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_settings_set_integer")]
+        public static void OMTSettingsSetInteger(IntPtr name, int value)
+        {
+            try
+            {
+                if (name != IntPtr.Zero)
+                {
+                    string? szName = Marshal.PtrToStringUTF8(name);
+                    if (szName != null)
+                    {
+                        OMTSettings.GetInstance().SetInteger(szName, value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_settings_set_integer");
+            }
+        }
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_settings_get_integer")]
+        public static int OMTSettingsGetInteger(IntPtr name)
+        {
+            try
+            {
+                if (name != IntPtr.Zero)
+                {
+                    string? szName = Marshal.PtrToStringUTF8(name);
+                    if (szName != null)
+                    {
+                        return OMTSettings.GetInstance().GetInteger(szName, 0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_settings_get_integer");
+            }
+            return 0;
         }
 
         [UnmanagedCallersOnly(EntryPoint = "omt_send_create")]
