@@ -117,7 +117,7 @@ struct OMTStatistics
 
 struct OMTMediaFrame
 {
-    OMTFrameType Type;
+    enum OMTFrameType Type;
     int64_t Timestamp;
     int Codec;
 
@@ -125,11 +125,11 @@ struct OMTMediaFrame
     int Width;
     int Height;
     int Stride;
-    OMTVideoFlags Flags;
+    enum OMTVideoFlags Flags;
     int FrameRateN;
     int FrameRateD;
     float AspectRatio;
-    OMTColorSpace ColorSpace;
+    enum OMTColorSpace ColorSpace;
 
     //Audio Properties
     int SampleRate;
