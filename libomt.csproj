@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 <PublishAot>true</PublishAot>
+<Version>1.0.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
