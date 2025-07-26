@@ -41,9 +41,14 @@ typedef enum OMTFrameType
 typedef enum OMTCodec
 {
     OMTCodec_VMX1 = 0x31584D56,
-    OMTCodec_FPA1 = 0x31415046,
+    OMTCodec_FPA1 = 0x31415046, //Planar audio
     OMTCodec_UYVY = 0x59565955,
-    OMTCodec_BGRA = 0x41524742
+    OMTCodec_YUY2 = 0x32595559,
+    OMTCodec_BGRA = 0x41524742,
+    OMTCodec_NV12 = 0x3231564E,
+    OMTCodec_YV12 = 0x32315659,
+    OMTCodec_UYVA = 0x41565955,
+
 } OMTCodec;
 typedef enum OMTQuality
 {
@@ -74,6 +79,7 @@ typedef enum OMTPreferredVideoFormat
     OMTPreferredVideoFormat_UYVY = 0,
     OMTPreferredVideoFormat_UYVYorBGRA = 1,
     OMTPreferredVideoFormat_BGRA = 2,
+    OMTPreferredVideoFormat_UYVYorUYVA = 3,
     OMTPreferredVideoFormat_INT32 = 0x7fffffff //Ensure int type in C
 } OMTPreferredVideoFormat;
 typedef enum OMTReceiveFlags
@@ -81,6 +87,7 @@ typedef enum OMTReceiveFlags
     OMTReceiveFlags_None = 0,
     OMTReceiveFlags_Preview = 1,
     OMTReceiveFlags_IncludeCompressed = 2,
+    OMTReceiveFlags_CompressedOnly = 4,
     OMTReceiveFlags_INT32 = 0x7fffffff //Ensure int type in C
 } OMTReceiveFlags;
 
