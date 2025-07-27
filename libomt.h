@@ -319,6 +319,23 @@ extern "C" {
 
     /**
     * =================================================
+    * Discovery
+    * =================================================
+    */
+
+    /**
+    * Returns a list of sources currently available on the network.
+    * 
+    * Return value is an array of UTF-8 char pointers.
+    * 
+    * This array is valid until the next call to getaddresses.   
+    * 
+    * @param[in] count Number of entries in the returned array.
+    */
+    char** omt_discovery_getaddresses(int * count);
+
+    /**
+    * =================================================
     * Receive
     * =================================================
     */

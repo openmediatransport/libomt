@@ -59,5 +59,15 @@ namespace libomt
             return IntPtr.Zero;
         }
 
+        protected override void DisposeInternal()
+        {
+            if (lastAddresses != IntPtr.Zero)
+            {
+                InstanceHelper.FreeStringArray(lastAddresses, lastAddressesLength);
+                lastAddressesLength = 0;
+                lastAddresses = IntPtr.Zero;
+            }
+            base.DisposeInternal();
+        }
     }
 }
