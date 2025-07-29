@@ -341,6 +341,41 @@ namespace libomt
             }
         }
 
+        [UnmanagedCallersOnly(EntryPoint = "omt_receive_setsuggestedquality")]
+        public static void OMTReceiveSetSuggestedQuality(IntPtr instance, int quality)
+        {
+            try
+            {
+                ReceiveInstance? receiveInstance = (ReceiveInstance?)InstanceHelper.FromIntPtr(instance);
+                if (receiveInstance != null)
+                {
+                    receiveInstance.SetSuggestedQuality(quality);
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_receive_setsuggestedquality");
+            }
+        }
+
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_receive_setflags")]
+        public static void OMTReceiveSetFlags(IntPtr instance, int flags)
+        {
+            try
+            {
+                ReceiveInstance? receiveInstance = (ReceiveInstance?)InstanceHelper.FromIntPtr(instance);
+                if (receiveInstance != null)
+                {
+                    receiveInstance.SetFlags(flags);
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_receive_setflags");
+            }
+        }
+
         [UnmanagedCallersOnly(EntryPoint = "omt_send_getvideostatistics")]
         public static void OMTSendGetVideoStatistics(IntPtr instance, IntPtr statistics)
         {

@@ -39,6 +39,22 @@ namespace libomt
             instance = receive;
         }
 
+        public void SetFlags(int flags)
+        {
+            if (receive != null)
+            {
+               receive.SetFlags((OMTReceiveFlags)flags);
+            }
+        }
+
+        public void SetSuggestedQuality(int quality)
+        {
+            if (receive != null)
+            {
+                receive.SetSuggestedQuality((OMTQuality)quality);
+            }
+        }
+
         public void SetTally(IntPtr pTally)
         {
             if (receive != null)

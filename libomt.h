@@ -55,6 +55,10 @@ typedef enum OMTFrameType
 * YV12 = Planar 4:2:0 YUV format. Y plane followed by half height U and V planes.
 *
 * BGRA = 32bpp RGBA format (Same as ARGB32 on Win32)
+* 
+* P216 = Planar 4:2:2 YUV format. 16bit Y plane followed by interlaved 16bit UV plane.
+* 
+* PA16 = Same as P216 folowed by an additional 16bit alpha plane.
 *
 * FPA1 = Floating-point Planar Audio 32bit
 */
@@ -68,6 +72,8 @@ typedef enum OMTCodec
     OMTCodec_NV12 = 0x3231564E,
     OMTCodec_YV12 = 0x32315659,
     OMTCodec_UYVA = 0x41565955,
+    OMTCodec_P216 = 0x36313250,
+    OMTCodec_PA16 = 0x36314150
 
 } OMTCodec;
 
@@ -113,13 +119,21 @@ typedef enum OMTColorSpace
 * PreMultiplied: When combined with Alpha, alpha channel is premultiplied, otherwise straight
 * 
 * Preview: Frame is a special 1/8th preview frame
+* 
+* HighBitDepth: Sender automatically adds this flag for frames encoded using P216 or PA16 pixel formats.
+* 
+* Set this manually for VMX1 compressed data where the the frame was originally encoded using P216 or PA16.
+* This determines which pixel format is selected on the decode side.
+* 
 */
 typedef enum OMTVideoFlags
 {
     OMTVideoFlags_None = 0,
     OMTVideoFlags_Interlaced = 1,
     OMTVideoFlags_Alpha = 2,
+    OMTVideoFlags_PreMultiplied = 4,
     OMTVideoFlags_Preview = 4,
+    OMTVideoFlags_HighBitDepth = 16,
     OMTVideoFlags_INT32 = 0x7fffffff //Ensure int type in C
 } OMTVideoFlags;
 
@@ -134,6 +148,8 @@ typedef enum OMTVideoFlags
 * 
 * UYVYorUYVA will provide UYVA only when alpha channel is present.
 * 
+* UYVYorUYVAorP216orPA16 will provide P216 if sender encoded with high bit depth, or PA16 if sender encoded with high bit depth and alpha. Otherwise same as UYVYorUYVA.
+* 
 */
 typedef enum OMTPreferredVideoFormat
 {
@@ -141,6 +157,7 @@ typedef enum OMTPreferredVideoFormat
     OMTPreferredVideoFormat_UYVYorBGRA = 1,
     OMTPreferredVideoFormat_BGRA = 2,
     OMTPreferredVideoFormat_UYVYorUYVA = 3,
+    OMTPreferredVideoFormat_UYVYorUYVAorP216orPA16 = 4,
     OMTPreferredVideoFormat_INT32 = 0x7fffffff //Ensure int type in C
 } OMTPreferredVideoFormat;
 
@@ -376,6 +393,17 @@ extern "C" {
     int omt_receive_send(omt_receive_t* instance, OMTMediaFrame* frame);
 
     void omt_receive_settally(omt_receive_t* instance, OMTTally* tally);
+
+    /**
+    * Change the flags on the current receive instance. Will apply from the next frame received.
+    * This allows dynamic switching between preview mode.
+    */
+    void omt_receive_setflags(omt_receive_t* instance, OMTReceiveFlags flags);
+
+    /**
+    * Inform the sender of the quality preference for this receiver. See OMTQuality documentation for more information.
+    */
+    void omt_receive_setsuggestedquality(omt_receive_t* instance, OMTQuality quality);
 
     /**
     * Retrieve optional information describing the sender. Valid only when connected. Returns null if disconnected or no sender information was provided by sender.
