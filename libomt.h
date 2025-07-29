@@ -158,6 +158,7 @@ typedef enum OMTPreferredVideoFormat
     OMTPreferredVideoFormat_BGRA = 2,
     OMTPreferredVideoFormat_UYVYorUYVA = 3,
     OMTPreferredVideoFormat_UYVYorUYVAorP216orPA16 = 4,
+    OMTPreferredVideoFormat_P216 = 5,
     OMTPreferredVideoFormat_INT32 = 0x7fffffff //Ensure int type in C
 } OMTPreferredVideoFormat;
 
