@@ -437,6 +437,17 @@ extern "C" {
     void omt_send_setsenderinformation(omt_send_t* instance, OMTSenderInfo* info);
 
     /**
+    * Use this to inform receivers to connect to a different address.
+    * 
+    * This is used to create a "virtual source" that can be dynamically switched as needed.
+    * 
+    * This is useful for scenarios where receiver needs to be changed remotely.
+    * 
+    * @param[in] newAddress The new address. Set to null or empty to disable redirect.
+    */
+    void omt_send_setredirect(omt_send_t* instance, const char* newAddress);
+
+    /**
     * Destroy instance created with omt_send_create.
     *
     * Make sure any threads currently accessing the omt_send_ functions with this instance are closed before calling.

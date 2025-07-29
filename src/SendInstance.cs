@@ -46,6 +46,17 @@ namespace libomt
             return 0;
         }
 
+        public void SetRedirect(IntPtr newAddress)
+        {
+            if (send != null)
+            {
+                if (newAddress != IntPtr.Zero)
+                {
+                    send.SetRedirect(OMTUtils.PtrToStringUTF8(newAddress));
+                } 
+            }
+        }
+
         public IntPtr Receive(int millisecondsTimeout)
         {
             if (send != null)

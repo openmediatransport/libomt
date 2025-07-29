@@ -446,6 +446,23 @@ namespace libomt
         }
 
 
+        [UnmanagedCallersOnly(EntryPoint = "omt_send_setredirect")]
+        public static void OMTSendSetRedirect(IntPtr instance, IntPtr newAddress)
+        {
+            try
+            {
+               SendInstance? sendInstance = (SendInstance?)InstanceHelper.FromIntPtr(instance);
+                if (sendInstance != null)
+                {
+                    sendInstance.SetRedirect(newAddress);
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_send_setredirect");
+            }
+        }
+
         [UnmanagedCallersOnly(EntryPoint = "omt_send_setsenderinformation")]
         public static void OMTSendSetSenderInformation(IntPtr instance, IntPtr info)
         {
