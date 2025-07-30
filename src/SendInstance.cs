@@ -46,6 +46,15 @@ namespace libomt
             return 0;
         }
 
+        public int GetAddress(IntPtr value, int maxLength)
+        {
+            if (send != null)
+            {
+                return InstanceHelper.WriteString(send.Address, value, maxLength);
+            }
+            return 0;
+        }
+
         public void SetRedirect(IntPtr newAddress)
         {
             if (send != null)

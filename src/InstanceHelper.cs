@@ -24,6 +24,7 @@
 */
 
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace libomt
 {
@@ -42,6 +43,23 @@ namespace libomt
         {
             if (obj == null) return IntPtr.Zero;
             return GCHandle.ToIntPtr(GCHandle.Alloc(obj));
+        }
+
+        public static int WriteString(string value, IntPtr dst, int maxLength)
+        {
+            byte[] b = UTF8Encoding.UTF8.GetBytes(value);
+            if (b != null)
+            {
+                int len = b.Length + 1;
+                if (dst == IntPtr.Zero) return len;
+                if (maxLength > len)
+                {
+                    Marshal.Copy(b, 0, dst, b.Length);
+                    Marshal.WriteByte(dst, b.Length, 0);
+                    return len;
+                }
+            }
+            return 0;
         }
 
         public static IntPtr AllocStringArray(string[] values)

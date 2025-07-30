@@ -6,3 +6,4 @@ install_name_tool -id @rpath/libomt.dylib ../bin/Release/net8.0/osx-x64/publish/
 install_name_tool -id @rpath/libomt.dylib ../bin/Release/net8.0/osx-x64/native/libomt.dylib
 lipo -create -output libomt.dylib ../bin/Release/net8.0/osx-x64/native/libomt.dylib ../bin/Release/net8.0/osx-arm64/native/libomt.dylib
 install_name_tool -id @rpath/libomt.dylib libomt.dylib
+install_name_tool -add_rpath @loader_path libomt.dylib

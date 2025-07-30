@@ -79,18 +79,7 @@ namespace libomt
                         string szValue = OMTSettings.GetInstance().GetString(szName, null);
                         if (szValue != null)
                         {
-                            byte[] b = UTF8Encoding.UTF8.GetBytes(szValue);
-                            if (b != null)
-                            {
-                                int len = b.Length + 1;
-                                if (value == IntPtr.Zero) return len;
-                                if (maxLength > len)
-                                {
-                                    Marshal.Copy(b, 0, value, b.Length);
-                                    Marshal.WriteByte(value, b.Length, 0);
-                                    return len;
-                                }
-                            }
+                            return InstanceHelper.WriteString(szValue, value, maxLength);
                         }
                     }
                 }
@@ -164,6 +153,7 @@ namespace libomt
             return IntPtr.Zero;
         }
 
+
         [UnmanagedCallersOnly(EntryPoint = "omt_receive_create")]
         public static IntPtr OMTReceiveCreate(IntPtr name, OMTFrameType frameTypes, OMTPreferredVideoFormat format, OMTReceiveFlags receiveFlags)
         {
@@ -203,6 +193,27 @@ namespace libomt
             {
                 OMTLogging.Write(ex.ToString(), "omt_send_destroy");
             }
+        }
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_send_getaddress")]
+        public static int OMTSendGetAddress(IntPtr instance, IntPtr address, int maxLength)
+        {
+            try
+            {
+                if (instance != IntPtr.Zero)
+                {
+                    SendInstance? sendInstance = (SendInstance?)InstanceHelper.FromIntPtr(instance);
+                    if (sendInstance != null)
+                    {
+                        return sendInstance.GetAddress(address, maxLength);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_send_getaddress");
+            }
+            return 0;
         }
 
 

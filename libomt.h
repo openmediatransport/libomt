@@ -28,7 +28,9 @@
 
 #define OMT_MAX_STRING_LENGTH 1024
 
+#ifndef __cplusplus
 typedef long long int64_t;
+#endif
 
 typedef enum OMTFrameType
 {
@@ -447,6 +449,15 @@ extern "C" {
     * @param[in] newAddress The new address. Set to null or empty to disable redirect.
     */
     void omt_send_setredirect(omt_send_t* instance, const char* newAddress);
+
+    /**
+    * Retrieve the Discovery address in the format HOSTNAME (NAME)
+    * 
+    * Returns the length in bytes of the UTF-8 encoded value including null terminator.
+    * 
+    * maxLength specifies the maximum amount of bytes allocated to value by the caller.
+    */
+    int omt_send_getaddress(omt_send_t* instance, char* address, int maxLength);
 
     /**
     * Destroy instance created with omt_send_create.
