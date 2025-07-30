@@ -24,7 +24,9 @@
 */
 
 #pragma once
+#ifdef _MSC_VER
 #pragma comment(lib, "libomt.lib")
+#endif
 
 #define OMT_MAX_STRING_LENGTH 1024
 
