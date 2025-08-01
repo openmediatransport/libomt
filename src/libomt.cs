@@ -491,6 +491,40 @@ namespace libomt
             }
         }
 
+        [UnmanagedCallersOnly(EntryPoint = "omt_send_addconnectionmetadata")]
+        public static void OMTSendAddConnectionMetadata(IntPtr instance, IntPtr metadata)
+        {
+            try
+            {
+                SendInstance? sendInstance = (SendInstance?)InstanceHelper.FromIntPtr(instance);
+                if (sendInstance != null)
+                {
+                    sendInstance.AddConnectionMetadata(metadata);
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_send_addconnectionmetadata");
+            }
+        }
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_send_clearconnectionmetadata")]
+        public static void OMTSendClearConnectionMetadata(IntPtr instance)
+        {
+            try
+            {
+                SendInstance? sendInstance = (SendInstance?)InstanceHelper.FromIntPtr(instance);
+                if (sendInstance != null)
+                {
+                    sendInstance.ClearConnectionMetadata();
+                }
+            }
+            catch (Exception ex)
+            {
+                OMTLogging.Write(ex.ToString(), "omt_send_clearconnectionmetadata");
+            }
+        }
+
         [UnmanagedCallersOnly(EntryPoint = "omt_receive_getsenderinformation")]
         public static void OMTReceiveGetSenderInformation(IntPtr instance, IntPtr info)
         {

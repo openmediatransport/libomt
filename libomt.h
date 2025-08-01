@@ -452,6 +452,21 @@ extern "C" {
     void omt_send_setsenderinformation(omt_send_t* instance, OMTSenderInfo* info);
 
     /**
+    * Add to the list of metadata that is sent immediately upon a new connection by a receiver.
+    * 
+    * This metadata will also be immediately sent to any currently connected receivers.
+    * 
+    * @param[in] metadata XML metadata in UTF-8 encoding followed by a null terminator.
+    * 
+    */
+    void omt_send_addconnectionmetadata(omt_send_t* instance, const char* metadata);
+
+    /**
+    * Clears the list of metadata that is sent immediately upon a new connection by a receiver.
+    */
+    void omt_send_clearconnectionmetadata(omt_send_t* instance);
+
+    /**
     * Use this to inform receivers to connect to a different address.
     * 
     * This is used to create a "virtual source" that can be dynamically switched as needed.

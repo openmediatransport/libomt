@@ -87,9 +87,9 @@ namespace libomt
                 {
                     if (pInfo != IntPtr.Zero)
                     {
-                        OMTUtils.WriteStringToPtrUTF8(info.ProductName, pInfo);
-                        OMTUtils.WriteStringToPtrUTF8(info.Manufacturer, pInfo + UnmanagedExports.MAX_STRING_LENGTH);
-                        OMTUtils.WriteStringToPtrUTF8(info.Version, pInfo + UnmanagedExports.MAX_STRING_LENGTH + UnmanagedExports.MAX_STRING_LENGTH);
+                        OMTUtils.WriteStringToPtrUTF8(info.ProductName, pInfo, UnmanagedExports.MAX_STRING_LENGTH);
+                        OMTUtils.WriteStringToPtrUTF8(info.Manufacturer, pInfo + UnmanagedExports.MAX_STRING_LENGTH, UnmanagedExports.MAX_STRING_LENGTH);
+                        OMTUtils.WriteStringToPtrUTF8(info.Version, pInfo + UnmanagedExports.MAX_STRING_LENGTH + UnmanagedExports.MAX_STRING_LENGTH, UnmanagedExports.MAX_STRING_LENGTH);                       
                     }
                 }
             }

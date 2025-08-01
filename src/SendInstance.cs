@@ -24,6 +24,7 @@
 */
 
 using libomtnet;
+using System.Net.NetworkInformation;
 
 namespace libomt
 {
@@ -100,6 +101,25 @@ namespace libomt
             } 
         }
 
+        public void AddConnectionMetadata(IntPtr pMetadata)
+        {
+            if (send != null)
+            {
+                if (pMetadata != IntPtr.Zero)
+                {
+                    string metadata = OMTUtils.PtrToStringUTF8(pMetadata);
+                    send.AddConnectionMetadata(metadata);
+                }
+            }
+        }
+        public void ClearConnectionMetadata()
+        {
+            if (send != null)
+            {
+               send.ClearConnectionMetadata();
+            }
+        }
+
         public void SetSenderInformation(IntPtr pInfo)
         {
             if (send != null)
@@ -107,9 +127,9 @@ namespace libomt
                 if (pInfo != IntPtr.Zero)
                 {
                     OMTSenderInfo info = new OMTSenderInfo();
-                    info.ProductName = OMTUtils.PtrToStringUTF8(pInfo);
-                    info.Manufacturer = OMTUtils.PtrToStringUTF8(pInfo + UnmanagedExports.MAX_STRING_LENGTH);
-                    info.Version = OMTUtils.PtrToStringUTF8(pInfo + UnmanagedExports.MAX_STRING_LENGTH + UnmanagedExports.MAX_STRING_LENGTH);                    
+                    info.ProductName = OMTUtils.PtrToStringUTF8(pInfo, UnmanagedExports.MAX_STRING_LENGTH);
+                    info.Manufacturer = OMTUtils.PtrToStringUTF8(pInfo + UnmanagedExports.MAX_STRING_LENGTH, UnmanagedExports.MAX_STRING_LENGTH);
+                    info.Version = OMTUtils.PtrToStringUTF8(pInfo + UnmanagedExports.MAX_STRING_LENGTH + UnmanagedExports.MAX_STRING_LENGTH, UnmanagedExports.MAX_STRING_LENGTH);
                     send.SetSenderInformation(info);
                 }
             }
