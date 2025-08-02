@@ -32,6 +32,8 @@
 
 #ifndef __cplusplus
 typedef long long int64_t;
+#else
+#include <stdint.h>
 #endif
 
 typedef enum OMTFrameType
