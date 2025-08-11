@@ -30,8 +30,8 @@
 
 #define OMT_MAX_STRING_LENGTH 1024
 
-#ifndef __cplusplus
-typedef long long int64_t;
+#ifdef __cplusplus
+#include <cstdint>
 #else
 #include <stdint.h>
 #endif
