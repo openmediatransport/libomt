@@ -24,9 +24,9 @@ https://github.com/openmediatransport/libomtnet/releases
 
 /libomt
 
-3. The build process will reference and build the .NET Standard library in the ../libomtnet folder
-4. Run the build script for the desired platform from the build directory.
-5. A shared library and a .lib file should be generated in the platform native directory.
+2. The build process will reference and build the .NET Standard library in the ../libomtnet folder
+3. Run the build script for the desired platform from the build directory.
+4. A shared library and a .lib file should be generated in the platform native directory.
 On Windows this is usually bin\Release\net8.0\win-x64\native
 
 ## Using the library in your project
