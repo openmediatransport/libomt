@@ -6,15 +6,24 @@ libomt uses the .NET Native AOT Deployment to build a native shared library with
 
 ## Requirements
 
-.NET 8.0 or higher for Windows, Linux or MacOS
+.NET 8.0 for Windows, Linux or MacOS
 libvmx shared library
+
+## Getting Started
+
+Prebuild binaries of libomt for both Windows and MacOS is available in the Releases page for libomtnet here:
+https://github.com/openmediatransport/libomtnet/releases
 
 ## Compiling
 
-1. Setup a folder structure with both libomtnet and libomt as follows
+1. Setup a folder structure with both libomtnet and libomt as follows:
+   
 [root]
+
 /libomtnet
+
 /libomt
+
 2. The build process will reference and build the .NET Standard library in the ../libomtnet folder
 3. Run the build script for the desired platform from the build directory.
 4. A shared library and a .lib file should be generated in the platform native directory.
