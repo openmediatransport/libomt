@@ -4,15 +4,16 @@ libomt is a C wrapper for the libomnet library.
 
 libomt uses the .NET Native AOT Deployment to build a native shared library with C exports
 
-## Requirements
-
-.NET 8.0 for Windows, Linux or MacOS
-libvmx shared library
-
 ## Getting Started
 
-Prebuild binaries of libomt for both Windows and MacOS is available in the Releases page for libomtnet here:
+Prebuilt binaries of libomt for both Windows and MacOS is available in the Releases page for libomtnet here:
 https://github.com/openmediatransport/libomtnet/releases
+
+## Requirements
+
+libvmx shared library (included in the prebuilt binaries)
+
+.NET 8.0 for Windows, Linux or MacOS (.NET not required unless compiling from source)
 
 ## Compiling
 
