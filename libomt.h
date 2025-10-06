@@ -138,7 +138,7 @@ typedef enum OMTVideoFlags
     OMTVideoFlags_Interlaced = 1,
     OMTVideoFlags_Alpha = 2,
     OMTVideoFlags_PreMultiplied = 4,
-    OMTVideoFlags_Preview = 4,
+    OMTVideoFlags_Preview = 8,
     OMTVideoFlags_HighBitDepth = 16,
     OMTVideoFlags_INT32 = 0x7fffffff //Ensure int type in C
 } OMTVideoFlags;
