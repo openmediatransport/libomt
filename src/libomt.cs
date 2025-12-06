@@ -591,6 +591,9 @@ namespace libomt
                 {
                     OMTLogging.SetFilename(fn);
                 }
+            } else
+            {
+                OMTLogging.SetFilename(null);
             }
         }
 
