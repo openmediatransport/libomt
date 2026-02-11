@@ -409,7 +409,7 @@ extern "C" {
     * Returns 0 if timed out or tally didn't change. 1 otherwise.
     *
     */
-    int omt_receive_gettally(omt_send_t* instance, int timeoutMilliseconds, OMTTally* tally);
+    int omt_receive_gettally(omt_receive_t* instance, int timeoutMilliseconds, OMTTally* tally);
 
     /**
     * Change the flags on the current receive instance. Will apply from the next frame received.
