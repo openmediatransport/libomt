@@ -597,6 +597,23 @@ namespace libomt
             }
         }
 
+        [UnmanagedCallersOnly(EntryPoint = "omt_setloggingcallback")]
+        public static void OMTSetLoggingCallback(IntPtr callback)
+        {
+            if (callback != IntPtr.Zero)
+            {
+                OMTLogging.LogCallbackDelegate? fn = Marshal.GetDelegateForFunctionPointer<OMTLogging.LogCallbackDelegate>(callback);
+                if (fn != null)
+                {
+                    OMTLogging.SetCallback(fn);
+                }
+            }
+            else
+            {
+                OMTLogging.SetCallback(null);
+            }
+        }
+
         [UnmanagedCallersOnly(EntryPoint = "omt_discovery_getaddresses")]
         private static IntPtr OMTDiscoveryGetAddresses(IntPtr addressCount)
         {
