@@ -336,6 +336,7 @@ typedef struct OMTMediaFrame
 
 typedef long long omt_receive_t;
 typedef long long omt_send_t;
+typedef void (*OMTLoggingCallback)(const char *);
 
 #ifdef __cplusplus
 extern "C" {
@@ -549,6 +550,11 @@ extern "C" {
     * To override the default folder used for for logs, set the OMT_STORAGE_PATH environment variable prior to calling any OMT functions.
     */
     void omt_setloggingfilename(const char* filename);
+
+    /**
+    * Specify a log line callback, or null to disable.
+    */
+    void omt_setloggingcallback(OMTLoggingCallback callback);
 
     /**
     * =================================================
