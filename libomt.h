@@ -599,6 +599,12 @@ extern "C" {
     */
     void omt_settings_set_integer(const char* name, int value);
 
+    /**
+    * Shutdown Logging and Discovery background threads.
+    * This should only ever be called once before process exit after all senders and receivers have been destroyed first.
+    */
+    void omt_shutdown();
+
 #ifdef __cplusplus
 }
 #endif

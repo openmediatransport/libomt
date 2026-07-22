@@ -23,6 +23,7 @@
 *
 */
 
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using libomtnet;
@@ -187,6 +188,7 @@ namespace libomt
                     {
                         sendInstance.Dispose();
                     }
+                    InstanceHelper.FreeHandle(instance);
                 }
             }
             catch (Exception ex)
@@ -229,6 +231,7 @@ namespace libomt
                     {
                         receiveInstance.Dispose();
                     }
+                    InstanceHelper.FreeHandle(instance);
                 }
             }
             catch (Exception ex)
@@ -651,6 +654,24 @@ namespace libomt
             }
             return null;
         }
-       
+
+        [UnmanagedCallersOnly(EntryPoint = "omt_shutdown")]
+        private static void OMTShutdown()
+        {
+            try
+            {
+                if (discoveryInstance != null)
+                {
+                    discoveryInstance.Dispose();
+                    discoveryInstance = null;
+                }
+                OMTLogging.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
     }
 }

@@ -45,6 +45,15 @@ namespace libomt
             return GCHandle.ToIntPtr(GCHandle.Alloc(obj));
         }
 
+        public static void FreeHandle(IntPtr handle)
+        {
+            if (handle != IntPtr.Zero)
+            {
+                GCHandle gh = GCHandle.FromIntPtr(handle);
+                gh.Free();
+            }
+        }
+
         public static int WriteString(string value, IntPtr dst, int maxLength)
         {
             byte[] b = UTF8Encoding.UTF8.GetBytes(value);

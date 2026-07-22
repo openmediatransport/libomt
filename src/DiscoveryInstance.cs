@@ -67,6 +67,7 @@ namespace libomt
                 lastAddressesLength = 0;
                 lastAddresses = IntPtr.Zero;
             }
+            instance.Dispose();
             base.DisposeInternal();
         }
     }
